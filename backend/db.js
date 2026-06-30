@@ -117,14 +117,14 @@ function seedData() {
     const prodCount = db.exec('SELECT COUNT(*) as c FROM products');
     if (!prodCount[0] || prodCount[0].values[0][0] === 0) {
         const stmt = db.prepare('INSERT INTO products (name, category_key, price, image, icon, description) VALUES (?, ?, ?, ?, ?, ?)');
-        stmt.run(['Premium Cotton T-Shirt', 'tshirt', 24.99, 'img-tshirt.jpg', 'fas fa-tshirt', '100% premium cotton with vibrant print quality']);
-        stmt.run(['Classic Polo T-Shirt', 'tshirt', 29.99, 'img-polo.jpg', 'fas fa-tshirt', 'Elegant polo design for corporate events']);
-        stmt.run(['Ceramic Coffee Mug', 'mug', 12.99, 'img-mug.jpg', 'fas fa-mug-hot', 'Premium ceramic mug with custom printing']);
-        stmt.run(['Travel Insulated Mug', 'mug', 18.99, 'img-travel-mug.jpg', 'fas fa-mug-hot', 'Double-wall insulated for hot & cold drinks']);
-        stmt.run(['Wooden Photo Frame', 'frame', 15.99, 'img-frame.jpg', 'fas fa-image', 'Handcrafted wooden frame with glass cover']);
-        stmt.run(['Acrylic Modern Frame', 'frame', 19.99, 'img-acrylic-frame.jpg', 'fas fa-image', 'Sleek acrylic design for contemporary spaces']);
-        stmt.run(['Executive Ballpoint Pen', 'pen', 8.99, 'img-pen.jpg', 'fas fa-pen', 'Metal barrel with smooth writing mechanism']);
-        stmt.run(['Fountain Pen Set', 'pen', 34.99, 'img-fountain-pen.jpg', 'fas fa-pen-fancy', 'Luxury fountain pen with ink and gift box']);
+        stmt.run(['Premium Cotton T-Shirt', 'tshirt', 24.99, 'images/img-tshirt.jpg', 'fas fa-tshirt', '100% premium cotton with vibrant print quality']);
+        stmt.run(['Classic Polo T-Shirt', 'tshirt', 29.99, 'images/img-polo.jpg', 'fas fa-tshirt', 'Elegant polo design for corporate events']);
+        stmt.run(['Ceramic Coffee Mug', 'mug', 12.99, 'images/img-mug.jpg', 'fas fa-mug-hot', 'Premium ceramic mug with custom printing']);
+        stmt.run(['Travel Insulated Mug', 'mug', 18.99, 'images/img-travel-mug.jpg', 'fas fa-mug-hot', 'Double-wall insulated for hot & cold drinks']);
+        stmt.run(['Wooden Photo Frame', 'frame', 15.99, 'images/img-frame.jpg', 'fas fa-image', 'Handcrafted wooden frame with glass cover']);
+        stmt.run(['Acrylic Modern Frame', 'frame', 19.99, 'images/img-acrylic-frame.jpg', 'fas fa-image', 'Sleek acrylic design for contemporary spaces']);
+        stmt.run(['Executive Ballpoint Pen', 'pen', 8.99, 'images/img-pen.jpg', 'fas fa-pen', 'Metal barrel with smooth writing mechanism']);
+        stmt.run(['Fountain Pen Set', 'pen', 34.99, 'images/img-fountain-pen.jpg', 'fas fa-pen-fancy', 'Luxury fountain pen with ink and gift box']);
         stmt.free();
     }
 }
