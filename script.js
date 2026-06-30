@@ -15,57 +15,74 @@
     let cartCount = 0;
 
     // ============================================
-    // Product Data (load from localStorage or defaults)
+    // Product Data
     // ============================================
-    function getDefaultProducts() {
-        return [
-            { id: 1, name: "Premium Cotton T-Shirt", category: "tshirt", price: 24.99, icon: "fas fa-tshirt", image: "img-tshirt.jpg", description: "100% premium cotton with vibrant print quality" },
-            { id: 2, name: "Classic Polo T-Shirt", category: "tshirt", price: 29.99, icon: "fas fa-tshirt", image: "img-polo.jpg", description: "Elegant polo design for corporate events" },
-            { id: 3, name: "Ceramic Coffee Mug", category: "mug", price: 12.99, icon: "fas fa-mug-hot", image: "img-mug.jpg", description: "Premium ceramic mug with custom printing" },
-            { id: 4, name: "Travel Insulated Mug", category: "mug", price: 18.99, icon: "fas fa-mug-hot", image: "img-travel-mug.jpg", description: "Double-wall insulated for hot & cold drinks" },
-            { id: 5, name: "Wooden Photo Frame", category: "frame", price: 15.99, icon: "fas fa-image", image: "img-frame.jpg", description: "Handcrafted wooden frame with glass cover" },
-            { id: 6, name: "Acrylic Modern Frame", category: "frame", price: 19.99, icon: "fas fa-image", image: "img-acrylic-frame.jpg", description: "Sleek acrylic design for contemporary spaces" },
-            { id: 7, name: "Executive Ballpoint Pen", category: "pen", price: 8.99, icon: "fas fa-pen", image: "img-pen.jpg", description: "Metal barrel with smooth writing mechanism" },
-            { id: 8, name: "Fountain Pen Set", category: "pen", price: 34.99, icon: "fas fa-pen-fancy", image: "img-fountain-pen.jpg", description: "Luxury fountain pen with ink and gift box" }
-        ];
-    }
-
-    function loadProducts() {
-        try {
-            const saved = localStorage.getItem('rajStudioGift_products');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-            }
-        } catch (e) { /* ignore */ }
-        return getDefaultProducts();
-    }
-
-    let products = loadProducts();
-
-    async function fetchProductsFromApi() {
-        try {
-            const r = await fetch('/api/products');
-            if (!r.ok) return;
-            const data = await r.json();
-            if (Array.isArray(data) && data.length > 0) {
-                products = data.map(p => ({
-                    id: p.id,
-                    name: p.name,
-                    category: p.category_key,
-                    price: p.price,
-                    icon: p.icon || 'fas fa-box',
-                    image: p.image || '',
-                    description: p.description || ''
-                }));
-                localStorage.setItem('rajStudioGift_products', JSON.stringify(products));
-                if (typeof renderProducts === 'function') {
-                    renderProducts(products);
-                    if (typeof initScrollReveal === 'function') initScrollReveal();
-                }
-            }
-        } catch (e) { /* API not available, use local data */ }
-    }
+    const products = [
+        {
+            id: 1,
+            name: "Premium Cotton T-Shirt",
+            category: "tshirt",
+            price: 24.99,
+            icon: "fas fa-tshirt",
+            description: "100% premium cotton with vibrant print quality"
+        },
+        {
+            id: 2,
+            name: "Classic Polo T-Shirt",
+            category: "tshirt",
+            price: 29.99,
+            icon: "fas fa-tshirt",
+            description: "Elegant polo design for corporate events"
+        },
+        {
+            id: 3,
+            name: "Ceramic Coffee Mug",
+            category: "mug",
+            price: 12.99,
+            icon: "fas fa-mug-hot",
+            description: "Premium ceramic mug with custom printing"
+        },
+        {
+            id: 4,
+            name: "Travel Insulated Mug",
+            category: "mug",
+            price: 18.99,
+            icon: "fas fa-mug-hot",
+            description: "Double-wall insulated for hot & cold drinks"
+        },
+        {
+            id: 5,
+            name: "Wooden Photo Frame",
+            category: "frame",
+            price: 15.99,
+            icon: "fas fa-image",
+            description: "Handcrafted wooden frame with glass cover"
+        },
+        {
+            id: 6,
+            name: "Acrylic Modern Frame",
+            category: "frame",
+            price: 19.99,
+            icon: "fas fa-image",
+            description: "Sleek acrylic design for contemporary spaces"
+        },
+        {
+            id: 7,
+            name: "Executive Ballpoint Pen",
+            category: "pen",
+            price: 8.99,
+            icon: "fas fa-pen",
+            description: "Metal barrel with smooth writing mechanism"
+        },
+        {
+            id: 8,
+            name: "Fountain Pen Set",
+            category: "pen",
+            price: 34.99,
+            icon: "fas fa-pen-fancy",
+            description: "Luxury fountain pen with ink and gift box"
+        }
+    ];
 
     // ============================================
     // Initialize Application
@@ -94,9 +111,6 @@
         // Render products
         renderProducts(products);
 
-        // Try to load products from backend API (if server is running)
-        fetchProductsFromApi();
-
         // Setup event listeners
         setupEventListeners();
 
@@ -109,9 +123,6 @@
 
         // Initialize scroll reveal
         initScrollReveal();
-
-        // Initialize gallery lightbox
-        initGalleryLightbox();
 
         // Close cart on escape key
         document.addEventListener('keydown', function(e) {
@@ -163,15 +174,6 @@
             });
         });
 
-        // Single-page navigation
-        document.querySelectorAll('[data-page]').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const page = this.dataset.page;
-                if (page) switchPage(page);
-            });
-        });
-
         // Cart sidebar
         if (closeCartBtn) {
             closeCartBtn.addEventListener('click', closeCart);
@@ -193,10 +195,9 @@
             contactForm.addEventListener('submit', handleContactSubmit);
         }
 
-        // Smooth scroll for anchor links (skip data-page nav links)
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                if (this.dataset.page) return;
                 const href = this.getAttribute('href');
                 if (href !== '#') {
                     e.preventDefault();
@@ -225,27 +226,6 @@
         } else {
             navbar.classList.remove('scrolled');
         }
-    }
-
-    let currentPage = 'home';
-
-    function switchPage(page) {
-        currentPage = page;
-        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-        const target = document.getElementById('page-' + page);
-        if (target) target.classList.add('active');
-        updateActiveNavLink();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        if (typeof initScrollReveal === 'function') setTimeout(initScrollReveal, 100);
-    }
-
-    function updateActiveNavLink() {
-        document.querySelectorAll('.bottom-nav-link, .nav-link').forEach(link => {
-            link.classList.remove('active');
-            if (link.dataset.page === currentPage) {
-                link.classList.add('active');
-            }
-        });
     }
 
     // ============================================
@@ -289,18 +269,8 @@
             observer.observe(el);
         });
 
-        // Observe stat items
-        document.querySelectorAll('.stat-item').forEach(el => {
-            observer.observe(el);
-        });
-
         // Observe option cards
         document.querySelectorAll('.option-card').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Observe gallery items
-        document.querySelectorAll('.gallery-item').forEach(el => {
             observer.observe(el);
         });
 
@@ -330,12 +300,12 @@
             card.style.transitionDelay = `${index * 0.1}s`;
             card.innerHTML = `
                 <div class="product-image">
-                    <img src="${product.image}" alt="${product.name}" loading="lazy">
+                    <i class="${product.icon}"></i>
                 </div>
                 <div class="product-info">
                     <h3>${product.name}</h3>
                     <p>${product.description}</p>
-                    <span class="product-price">₹${product.price.toFixed(2)}</span>
+                    <span class="product-price">$${product.price.toFixed(2)}</span>
                     <button class="add-to-cart" data-id="${product.id}">
                         <i class="fas fa-shopping-cart"></i> Add to Cart
                     </button>
@@ -351,46 +321,6 @@
                 const productId = parseInt(this.getAttribute('data-id'));
                 addToCart(productId);
             });
-        });
-    }
-
-    // ============================================
-    // Gallery Lightbox
-    // ============================================
-    function initGalleryLightbox() {
-        const items = document.querySelectorAll('.gallery-item');
-        if (!items.length) return;
-
-        const lightbox = document.createElement('div');
-        lightbox.className = 'gallery-lightbox';
-        lightbox.innerHTML = '<button class="gallery-lightbox-close">&times;</button><img src="" alt="">';
-        document.body.appendChild(lightbox);
-
-        const lightboxImg = lightbox.querySelector('img');
-        const closeBtn = lightbox.querySelector('.gallery-lightbox-close');
-
-        items.forEach(item => {
-            item.addEventListener('click', function() {
-                const img = this.querySelector('img');
-                if (img) {
-                    lightboxImg.src = img.src;
-                    lightbox.classList.add('open');
-                    document.body.style.overflow = 'hidden';
-                }
-            });
-        });
-
-        function closeLightbox() {
-            lightbox.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === this) closeLightbox();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
         });
     }
 
@@ -462,7 +392,7 @@
                 id: product.id,
                 name: product.name,
                 price: product.price,
-                image: product.image,
+                icon: product.icon,
                 quantity: 1
             });
         }
@@ -526,7 +456,7 @@
                     <p>Your cart is empty</p>
                 </div>
             `;
-            cartTotalEl.textContent = '₹0.00';
+            cartTotalEl.textContent = '$0.00';
             if (checkoutBtn) checkoutBtn.disabled = true;
             return;
         }
@@ -536,11 +466,11 @@
         cartItemsContainer.innerHTML = cart.map(item => `
             <div class="cart-item">
                 <div class="cart-item-image">
-                    <img src="${item.image}" alt="${item.name}">
+                    <i class="${item.icon}"></i>
                 </div>
                 <div class="cart-item-details">
                     <h4>${item.name}</h4>
-                    <p>₹${item.price.toFixed(2)} each</p>
+                    <p>$${item.price.toFixed(2)} each</p>
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <button class="cart-item-remove" onclick="app.updateQuantity(${item.id}, -1)" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.2rem;">-</button>
                         <span style="color: var(--gold); font-weight: 600;">${item.quantity}</span>
@@ -554,7 +484,7 @@
         `).join('');
 
         const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        cartTotalEl.textContent = `₹${total.toFixed(2)}`;
+        cartTotalEl.textContent = `$${total.toFixed(2)}`;
     }
 
     function openCart() {
@@ -581,54 +511,26 @@
         if (cart.length === 0) return;
 
         const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const email = prompt('Enter your Gmail to place the order:', '');
-        if (!email) return;
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showToast('Please enter a valid email address!', true);
-            return;
-        }
-
-        const orderData = {
-            items: cart.map(item => ({
-                id: item.id,
-                name: item.name,
-                price: item.price,
-                image: item.image,
-                quantity: item.quantity
-            })),
-            total: total,
-            customer_email: email
-        };
-
-        fetch('/api/orders', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(orderData)
-        }).then(r => r.json()).then(data => {
-            if (data.success) {
-                cart.forEach(item => {
-                    saveToGoogleSheet({
-                        timestamp: new Date().toISOString(),
-                        product: item.name,
-                        price: item.price,
-                        quantity: item.quantity,
-                        total: item.price * item.quantity,
-                        email: email,
-                        action: 'Ordered'
-                    });
+        
+        if (confirm(`Proceed to checkout?\n\nTotal: $${total.toFixed(2)}\n\nThank you for your order! We'll contact you shortly.`)) {
+            // Save full order to Google Sheet
+            cart.forEach(item => {
+                saveToGoogleSheet({
+                    timestamp: new Date().toISOString(),
+                    product: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    total: item.price * item.quantity,
+                    action: 'Ordered'
                 });
+            });
 
-                cart = [];
-                saveCart();
-                updateCartUI();
-                closeCart();
-                showToast('Order placed successfully! We\'ll contact you at ' + email);
-            }
-        }).catch(() => {
-            showToast('Server not reachable. Please try again.', true);
-        });
+            cart = [];
+            saveCart();
+            updateCartUI();
+            closeCart();
+            showToast('Order placed successfully!');
+        }
     }
 
     // ============================================
