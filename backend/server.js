@@ -9,6 +9,7 @@ const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const contactRoutes = require('./routes/contact');
 const galleryRoutes = require('./routes/gallery');
+const resetRoutes = require('./routes/reset');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/gallery', galleryRoutes);
+app.use('/api/reset', resetRoutes);
 
 app.get('/api/stats', (req, res) => {
     const d = getDb();

@@ -96,6 +96,7 @@
         const previewImg = document.getElementById('previewImg');
         const previewPlaceholder = document.getElementById('previewPlaceholder');
         const productSearch = document.getElementById('productSearch');
+        const resetAllBtn = document.getElementById('resetAllBtn');
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
@@ -277,6 +278,19 @@
 
         productSearch.addEventListener('input', function() {
             renderProducts(this.value);
+        });
+
+        resetAllBtn.addEventListener('click', function() {
+            showConfirm('Reset All Data', 'This will delete all orders, contact messages, gallery images and reset categories & products to defaults. This cannot be undone!', async function() {
+                const result = await apiPost('/reset');
+                if (result.success) {
+                    showToast('All data reset to defaults');
+                    await loadAndRender();
+                } else {
+                    showToast(result.error || 'Reset failed', 'error');
+                }
+            });
+            document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> Reset Everything';
         });
     });
 

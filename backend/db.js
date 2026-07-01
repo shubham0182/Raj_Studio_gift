@@ -129,6 +129,16 @@ function seedData() {
     }
 }
 
+function resetData() {
+    db.run('DELETE FROM orders');
+    db.run('DELETE FROM contact_messages');
+    db.run('DELETE FROM gallery');
+    db.run('DELETE FROM products');
+    db.run('DELETE FROM categories');
+    seedData();
+    saveDb();
+}
+
 function query(sql, params) {
     if (params && params.length) {
         return db.exec(sql, params);
@@ -145,4 +155,4 @@ function run(sql, params) {
     saveDb();
 }
 
-module.exports = { initDb, getDb, query, run };
+module.exports = { initDb, getDb, query, run, resetData };
