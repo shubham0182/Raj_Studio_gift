@@ -187,6 +187,88 @@ header.scrolled {
 }
 
 /* ============================================ */
+/* Bottom Navigation (Mobile) */
+/* ============================================ */
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(15, 30, 58, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 999;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem 0;
+    transition: transform 0.3s ease;
+}
+
+.bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    transition: var(--transition-fast);
+    position: relative;
+    min-width: 60px;
+}
+
+.bottom-nav-item i {
+    font-size: 1.2rem;
+    transition: var(--transition-fast);
+}
+
+.bottom-nav-item span {
+    transition: var(--transition-fast);
+}
+
+.bottom-nav-item.active {
+    color: var(--gold);
+}
+
+.bottom-nav-item.active i {
+    text-shadow: 0 0 10px rgba(245, 197, 66, 0.4);
+}
+
+.bottom-nav-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--light-blue));
+    border-radius: 0 0 2px 2px;
+    transition: width 0.3s ease;
+}
+
+.bottom-nav-item.active::after {
+    width: 60%;
+}
+
+.bottom-nav-item:hover {
+    color: var(--gold);
+}
+
+@media (max-width: 768px) {
+    .bottom-nav {
+        display: flex;
+    }
+
+    body {
+        padding-bottom: 3.5rem;
+    }
+}
+
+/* ============================================ */
 /* Hero Section */
 /* ============================================ */
 .hero {
@@ -404,6 +486,7 @@ header.scrolled {
 section {
     padding: 6rem 5%;
     position: relative;
+    scroll-margin-top: 80px;
 }
 
 .section-header {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raj Studio Gift - Corporate & Customized Gift Solutions</title>
+    <title>Contact - Raj Studio Gift</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -31,54 +31,60 @@
         </nav>
     </header>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Corporate &amp; Customized Gift Solutions</h1>
-            <p>Premium quality gifts tailored for your corporate needs</p>
-            <div class="cta-buttons">
-                <a href="products.html" class="btn-primary">Shop Now</a>
-                <a href="customize.html" class="btn-secondary">Customize Gift</a>
-            </div>
+    <section id="contact" class="contact">
+        <div style="text-align:center;margin-bottom:1rem;">
+            <a href="admin/admin.html" class="btn-outline" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 2rem;">
+                <i class="fas fa-shield-alt"></i> Admin Panel
+            </a>
         </div>
-        <div class="hero-bg-shapes">
-            <div class="shape shape1"></div>
-            <div class="shape shape2"></div>
-            <div class="shape shape3"></div>
-        </div>
-    </section>
-
-    <section id="features" class="features">
         <div class="section-header">
-            <h2>Why Choose Us</h2>
-            <p>Experience the difference with our premium services</p>
+            <h2>Contact Us</h2>
+            <p>Get in touch with our team for inquiries and orders</p>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-star"></i>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="info-item">
+                    <i class="fas fa-user"></i>
+                    <span>Name: Rajendrasinh Vihol</span>
                 </div>
-                <h3>Quality Printing</h3>
-                <p>We use state-of-the-art printing technology for vibrant, long-lasting results.</p>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Phone: +91 98765 43210</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Address: 123 Corporate Park, Ahmedabad, Gujarat 380015</span>
+                </div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-paint-brush"></i>
-                </div>
-                <h3>Creative Designs</h3>
-                <p>Our expert designers create unique, eye-catching designs tailored to your brand.</p>
+            <div class="contact-map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.1234567890123!2d72.5714!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e83f1a4f7b3f1%3A0x8a2d3a0b8c9d0e1f!2s123%20Corporate%20Park%2C%20Ahmedabad%2C%20Gujarat%20380015!5e0!3m2!1sen!2sin!4v1619744305862"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3>Trusted Service</h3>
-                <p>With years of experience, we deliver reliable service and on-time delivery.</p>
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" placeholder="Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
             </div>
         </div>
     </section>
 
     <nav class="bottom-nav">
-        <a href="index.html" class="bottom-nav-item active">
+        <a href="index.html" class="bottom-nav-item">
             <i class="fas fa-home"></i>
             <span>Home</span>
         </a>
@@ -90,7 +96,7 @@
             <i class="fas fa-paint-brush"></i>
             <span>Customize</span>
         </a>
-        <a href="contact.html" class="bottom-nav-item">
+        <a href="contact.html" class="bottom-nav-item active">
             <i class="fas fa-envelope"></i>
             <span>Contact</span>
         </a>

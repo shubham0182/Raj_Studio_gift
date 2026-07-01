@@ -11,8 +11,10 @@
     let preloader, navbar, navLinks, hamburger, cartSidebar, cartOverlay;
     let closeCartBtn, cartItemsContainer, cartTotalEl, checkoutBtn;
     let filterBtns, productsGrid, contactForm;
+    let bottomNav, bottomNavItems;
     let cart = [];
     let cartCount = 0;
+
 
     // ============================================
     // Product Data
@@ -104,6 +106,8 @@
         filterBtns = document.querySelectorAll('.filter-btn');
         productsGrid = document.querySelector('.products-grid');
         contactForm = document.getElementById('contactForm');
+        bottomNav = document.querySelector('.bottom-nav');
+        bottomNavItems = document.querySelectorAll('.bottom-nav-item');
 
         // Load cart from localStorage
         loadCart();
@@ -123,6 +127,9 @@
 
         // Initialize scroll reveal
         initScrollReveal();
+
+        // Initialize bottom navigation
+        initBottomNav();
 
         // Close cart on escape key
         document.addEventListener('keydown', function(e) {
@@ -147,10 +154,26 @@
     }
 
     // ============================================
+    // Bottom Navigation
+    // ============================================
+    function initBottomNav() {
+        if (!bottomNav || !bottomNavItems.length) return;
+        const page = window.location.pathname.split('/').pop() || 'index.html';
+        bottomNavItems.forEach(item => {
+            const href = item.getAttribute('href');
+            if (href === page) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    // ============================================
     // Event Listeners Setup
     // ============================================
     function setupEventListeners() {
-        // Scroll event for navbar
+        // Scroll event for navbar and bottom nav
         let scrollTimeout;
         window.addEventListener('scroll', function() {
             if (!scrollTimeout) {
